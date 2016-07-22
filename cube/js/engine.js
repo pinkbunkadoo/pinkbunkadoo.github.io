@@ -2,8 +2,8 @@
 var Engine = {};
 var Time = {};
 
-MESHES = [ 'level01.obj', 'level02.obj', 'cube.obj', 'cone.obj', 'ico.obj' ];
-TEXTURES = [  ];
+MESHES = [ 'level01.obj', 'level02.obj', 'cube.obj', 'cone.obj', 'ico.obj', 'marker.obj' ];
+TEXTURES = [ ];
 
 Engine.createElements = function() {
   document.body.style.backgroundColor = 'rgb(0, 0, 0)';
@@ -87,6 +87,7 @@ Engine.init = function(width, height, scale) {
   Engine.keys = {};
   Engine.entities = [];
   Engine.lines = [];
+  Engine.transitions = [];
 
   Engine.scale = (scale !== undefined ? scale : 1);
 
@@ -247,11 +248,23 @@ Engine.createWorld = function() {
   cube.tint = new Colorf(1, 1, 1);
   Engine.cube = cube;
 
-  Engine.cursor = new Entity(0, 0, 0);
+  // Engine.cursor = new Entity(0, 0, 0);
 
   // Engine.cursor.lines = [
   //   new Line(new Vector(-0.5, 0.5, 0.5), new Vector(0.5, 0.5, 0.5)),
   // ];
+
+  var marker = new Entity(0.5, Engine.cube.transform.position.y + 1, 0.5);
+  marker.mesh = Engine.meshes['marker.obj'];
+  marker.ambient = 0.8;
+  Engine.marker = marker;
+
+  // var timer = new Timer({id : 'marker', duration: 1s }, );
+  // Engine.timers['marker'] = timer;
+
+  var transition = new Transition({ duration: 500, startValue: 1, endValue: 1.2, object: marker.transform.position, property: 'y', bounce: true, repeat: true });
+  Engine.transitions['marker'] = transition;
+
   Engine.gridId = 0;
 
   // var cone = new Entity(0, 0, 0);
@@ -294,12 +307,18 @@ Engine.bootup = function() {
 
 Engine.resume = function() {
   if (Engine.initialised) {
+
     Engine.active = true;
     Time.now = performance.now();
     Time.then = Time.now;
     Time.count = 0;
     Engine.fps.average = Engine.fps.standard;
     Engine.frameID = requestAnimationFrame(Engine.frame);
+
+    for (i in Engine.transitions) {
+      Engine.transitions[i].start();
+    }
+
   }
 }
 
@@ -307,6 +326,10 @@ Engine.resume = function() {
 Engine.stop = function() {
   Engine.active = false;
   cancelAnimationFrame(Engine.frameID);
+
+  for (i in Engine.transitions) {
+    Engine.transitions[i].stop();
+  }
 
   var ctx = Engine.context;
   var x = Engine.width - 10, y = 4;
@@ -316,32 +339,31 @@ Engine.stop = function() {
 }
 
 
+Engine.updateTransitions = function() {
+  for (i in Engine.transitions) {
+    Engine.transitions[i].update();
+  }
+}
+
+
 Engine.update = function() {
   var camera = Renderer.view.camera;
   var center = new Vector();
   var axis = new Vector(0, 1, 0);
-  var delta = 1 / Time.delta;
+  var delta = Time.delta;
 
   if (Engine.keys['ArrowLeft']) {
-    // Engine.cube.transform.rotation.y += -100 * delta * RAD;
-    // Engine.level.rotation.y += -100 * delta * RAD;
   }
 
   if (Engine.keys['ArrowRight']) {
-    // Engine.cube.transform.rotation.y += 100 * delta * RAD;
-    // Engine.level.rotation.y += 100 * delta * RAD;
   }
 
   if (Engine.keys['ArrowUp']) {
-    // Engine.cursor.position.y++;
-    // Engine.cube.rotation.x += -100 * delta * RAD;
     camera.transform.position.y--;
     camera.orientation = Camera.lookAt(camera.transform.position, new Vector(), new Vector(0, 1, 0));
   }
 
   if (Engine.keys['ArrowDown']) {
-    // Engine.cursor.position.y--;
-    // Engine.cube.rotation.x += 100 * delta * RAD;
     camera.transform.position.y++;
     camera.orientation = Camera.lookAt(camera.transform.position, new Vector(), new Vector(0, 1, 0));
   }
@@ -355,7 +377,7 @@ Engine.update = function() {
   }
 
   if (Engine.ico) {
-    var angle = (20 * delta);
+    var angle = (1 * delta);
     Engine.ico.transform.rotateAround(center, (new Vector(0, 1, 0)).normalize(), angle);
   }
 
@@ -379,7 +401,7 @@ Engine.update = function() {
   // Engine.cone.transform.rotation.z += theta;
 
   if (Engine.interact.primary) {
-    var angle = -(Engine.interact.deltaX * 10) * delta;
+    var angle = -(Engine.interact.deltaX) * 0.01 * delta;
     Renderer.view.camera.transform.rotateAround(center, axis, angle);
     camera.orientation = Camera.lookAt(camera.transform.position, new Vector(), new Vector(0, 1, 0));
   }
@@ -396,14 +418,15 @@ Engine.frame = function(timestamp) {
     // var interval = 1000 / Engine.fps.standard;
     Time.now = performance.now();
     // Time.now = timestamp;
-    Time.delta = Time.now - Time.then;
+    Time.delta = 1000 / (Time.now - Time.then);
 
     // if (Time.delta >= interval) {
       Engine.update();
+      Engine.updateTransitions();
       Engine.draw();
 
       // Time.then = Time.now - (Time.delta % interval);
-      Engine.fps.average = Engine.fps.average * 0.99 + (1000 / Time.delta) * 0.01;
+      Engine.fps.average = Engine.fps.average * 0.99 + Time.delta * 0.01;
     // }
 
     Time.count++;
@@ -573,6 +596,10 @@ Engine.drawEntities = function() {
 
   if (Engine.cube) {
     Engine.drawEntity(Engine.cube);
+  }
+
+  if (Engine.marker) {
+    Engine.drawEntity(Engine.marker);
   }
 
   for (var i = 0; i < Engine.entities.length; i++) {
@@ -748,13 +775,22 @@ Engine.updateInteraction = function() {
 
 
 Engine.moveTo = function(g) {
+  var position = Engine.cube.transform.position;
   var x = (g % 16) - 7;
   var y = Engine.grid[g].height;
   var z = ((g / 16) >> 0) - 7;
 
-  Engine.cube.transform.position.x = x - 0.5;
-  Engine.cube.transform.position.z = z - 0.5;
-  Engine.cube.transform.position.y = y + 0.5;
+  position.x = x - 0.5;
+  position.z = z - 0.5;
+  position.y = y + 0.5;
+
+  Engine.marker.transform.position.x = position.x;
+  Engine.marker.transform.position.z = position.z;
+
+  Engine.transitions['marker'].stop();
+  var transition = new Transition({ duration: 500, startValue: position.y + 1, endValue: position.y + 1.2, object: Engine.marker.transform.position, property: 'y', bounce: true, repeat: true });
+  Engine.transitions['marker'] = transition;
+  transition.start();
 }
 
 
