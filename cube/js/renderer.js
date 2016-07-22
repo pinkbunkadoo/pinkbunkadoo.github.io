@@ -19,6 +19,7 @@ Renderer.init = function(surface, view) {
 
   Renderer.tricount = 0;
   Renderer.largetri = 0;
+  Renderer.pixcount = 0;
   Renderer.zsort = true;
   Renderer.id = 0;
 
@@ -37,6 +38,7 @@ Renderer.clearDepthBuffer = function() {
 Renderer.reset = function() {
   Renderer.tricount = 0;
   Renderer.largetri = 0;
+  Renderer.pixcount = 0;
   Renderer.clearDepthBuffer();
   Renderer.clearIdBuffer();
 }
@@ -83,11 +85,10 @@ Renderer.projectPoint = function(p, cameraTransform) {
 
 
 Renderer.setPixel = function(x, y, r, g, b, a) {
-  // if (x >= 0 && y >= 0 && x < Renderer.surface.width && y < Renderer.surface.height) {
-    var index = (y * Renderer.surface.width + x) * 4;
-
+  if (x >= 0 && y >= 0 && x < Renderer.surface.width && y < Renderer.surface.height) {
+    // var index = (y * Renderer.surface.width + x) * 4;
     Renderer.surface.buf32[y * Renderer.surface.width + x] = (255 << 24) | (b << 16) | (g << 8) | r;
-  // }
+  }
 }
 
 
@@ -238,6 +239,7 @@ Renderer.drawTriangle = function(v0, v1, v2, illumination, tint, texture, id) {
     s = 0;
 
     for (var x = bbminx; x <= bbmaxx; x++, s++) {
+      Renderer.pixcount++;
       p.x = x;
 
       w0 = w0f + -(v1.y - v2.y) * s;
@@ -256,50 +258,52 @@ Renderer.drawTriangle = function(v0, v1, v2, illumination, tint, texture, id) {
         // No perspective correct
         z = v0.z * w0 + v1.z * w1 + v2.z * w2;
 
-        cr = 255;
-        cg = 255;
-        cb = 255;
-
-        if (v0.color !== undefined) {
-          cr = v0.color.r;
-          cg = v0.color.g;
-          cb = v0.color.b;
-          if (tint) {
-            cr = cr * tint.r >> 0;
-            cg = cg * tint.g >> 0;
-            cb = cb * tint.b >> 0;
-          }
-        }
-
-        if (v0.uv) {
-          // u = v0.uv[0] * w0 + v1.uv[0] * w1 + v2.uv[0] * w2;
-          // v = v0.uv[1] * w0 + v1.uv[1] * w1 + v2.uv[1] * w2;
-        }
-
-        if (texture) {
-          // var c32 = texture.uvLookup(u, v);
-          // cr = c32 & 0xff;
-          // cg = (c32 >> 8) & 0xff;
-          // cb = (c32 >> 16) & 0xff;
-        }
-
-        // if (ao) {
-          // var c32 = ao.uvLookup(u, v);
-          // cr = cr * ((c32 & 0xff) / 255);
-          // cg = cg * (((c32 >> 8) & 0xff) / 255);
-          // cb = cb * (((c32 >> 16) & 0xff) / 255);
-        // }
-
-        if (illumination !== undefined) {
-          cr = (cr * illumination.r) >> 0;
-          cg = (cg * illumination.g) >> 0;
-          cb = (cb * illumination.b) >> 0;
-        }
 
         var index = y * Renderer.surface.width + x;
 
         if (z < Renderer.depthBuffer[index]) {
           Renderer.depthBuffer[index] = z;
+
+          cr = 255;
+          cg = 255;
+          cb = 255;
+
+          if (v0.color !== undefined) {
+            cr = v0.color.r;
+            cg = v0.color.g;
+            cb = v0.color.b;
+            if (tint) {
+              cr = cr * tint.r >> 0;
+              cg = cg * tint.g >> 0;
+              cb = cb * tint.b >> 0;
+            }
+          }
+
+          if (v0.uv) {
+            // u = v0.uv[0] * w0 + v1.uv[0] * w1 + v2.uv[0] * w2;
+            // v = v0.uv[1] * w0 + v1.uv[1] * w1 + v2.uv[1] * w2;
+          }
+
+          if (texture) {
+            // var c32 = texture.uvLookup(u, v);
+            // cr = c32 & 0xff;
+            // cg = (c32 >> 8) & 0xff;
+            // cb = (c32 >> 16) & 0xff;
+          }
+
+          // if (ao) {
+            // var c32 = ao.uvLookup(u, v);
+            // cr = cr * ((c32 & 0xff) / 255);
+            // cg = cg * (((c32 >> 8) & 0xff) / 255);
+            // cb = cb * (((c32 >> 16) & 0xff) / 255);
+          // }
+
+          if (illumination !== undefined) {
+            cr = (cr * illumination.r) >> 0;
+            cg = (cg * illumination.g) >> 0;
+            cb = (cb * illumination.b) >> 0;
+          }
+
           if (id > 0) Renderer.idBuffer[index] = id;
           Renderer.setPixel(x, y, cr, cg, cb, 255);
         }

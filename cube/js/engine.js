@@ -8,10 +8,6 @@ TEXTURES = [ ];
 Engine.createElements = function() {
   document.body.style.backgroundColor = 'rgb(0, 0, 0)';
 
-  Engine.fpsEl = document.createElement('div');
-  Engine.fpsEl.style.color = 'white';
-  document.body.appendChild(Engine.fpsEl);
-
   Engine.stage = document.createElement('div');
   Engine.stage.id = 'stage';
   Engine.stage.style.position = 'absolute';
@@ -35,6 +31,13 @@ Engine.createElements = function() {
   Engine.canvas.style.userSelect = 'none';
   Engine.stage.appendChild(Engine.canvas);
 
+  // Engine.fpsEl = document.createElement('div');
+  // Engine.fpsEl.style.color = 'white';
+  // Engine.fpsEl.style.position = 'absolute';
+  // Engine.fpsEl.style.top = '0px';
+  // Engine.fpsEl.style.left = '0px';
+  // Engine.stage.appendChild(Engine.fpsEl);
+
   Engine.context = Engine.canvas.getContext('2d');
 
   Engine.offscreenCanvas = document.createElement('canvas');
@@ -47,6 +50,7 @@ Engine.createElements = function() {
   Engine.context.webkitImageSmoothingEnabled = false;
   Engine.context.msImageSmoothingEnabled = false;
   Engine.context.imageSmoothingEnabled = false;
+
 }
 
 
@@ -105,6 +109,8 @@ Engine.init = function(width, height, scale) {
   Engine.initEventListeners();
   Engine.loadResources();
   // Engine.bootup();
+
+  // console.log(302 % 30);
 }
 
 
@@ -339,6 +345,40 @@ Engine.stop = function() {
 }
 
 
+Engine.isValidMove = function(g) {
+  var x = (g % 16);
+  var y = Engine.grid[g].height;
+  var z = ((g / 16) >> 0);
+
+  var position = Engine.cube.transform.position;
+  var cubex = position.x + 7.5, cubez = position.z + 7.5;
+
+  if (x == cubex) {
+    if (z >= cubez) {
+      for (var i = cubez; i <= z; i++) if (Engine.grid[i * 16 + x].height != position.y - 0.5) return false;
+      return true;
+    } else {
+      for (var i = cubez; i >= z; i--) if (Engine.grid[i * 16 + x].height != position.y - 0.5) return false;
+      return true;
+    }
+  } else if (z == cubez) {
+    if (x >= cubex) {
+      for (var i = cubex; i <= x; i++) if (Engine.grid[z * 16 + i].height != position.y - 0.5) return false;
+      return true;
+    } else {
+      for (var i = cubex; i >= x; i--) {
+        if (Engine.grid[z * 16 + i].height != position.y - 0.5) {
+          // console.log(i, cubex, x, z);
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+  return false;
+}
+
+
 Engine.updateTransitions = function() {
   for (i in Engine.transitions) {
     Engine.transitions[i].update();
@@ -377,8 +417,8 @@ Engine.update = function() {
   }
 
   if (Engine.ico) {
-    var angle = (1 * delta);
-    Engine.ico.transform.rotateAround(center, (new Vector(0, 1, 0)).normalize(), angle);
+    var angle = (0.01 * delta);
+    Engine.ico.transform.rotateAround(center, new Vector(0, 1, 0), angle);
   }
 
   if (Engine.compass) {
@@ -431,8 +471,10 @@ Engine.frame = function(timestamp) {
 
     Time.count++;
 
-    if (Time.count % Engine.fps.standard == 0) {
-      Engine.fpsEl.innerHTML = Engine.fps.standard;
+    if (Engine.fpsEl) {
+      if (Time.count % Engine.fps.standard == 0) {
+        Engine.fpsEl.innerHTML = Engine.fps.average.toFixed(1);
+      }
     }
 
     Time.then = Time.now;
@@ -514,9 +556,9 @@ Engine.drawEntity = function(entity, cull) {
         illumination.g = Math.min(1.0, illumination.g + ambient);
         illumination.b = Math.min(1.0, illumination.b + ambient);
 
-        v0.color = Color.copy(mesh.colors[triangle.colors[0]]);
-        v1.color = Color.copy(mesh.colors[triangle.colors[1]]);
-        v2.color = Color.copy(mesh.colors[triangle.colors[2]]);
+        v0.color = mesh.colors[triangle.colors[0]];
+        v1.color = mesh.colors[triangle.colors[1]];
+        v2.color = mesh.colors[triangle.colors[2]];
 
         if (triangle.uvs.length > 0) {
           v0.uv = mesh.uvs[triangle.uvs[0]];
@@ -555,40 +597,6 @@ Engine.drawEntityAxes = function(entity) {
 }
 
 
-Engine.isValidMove = function(g) {
-  var x = (g % 16);
-  var y = Engine.grid[g].height;
-  var z = ((g / 16) >> 0);
-
-  var position = Engine.cube.transform.position;
-  var cubex = position.x + 7.5, cubez = position.z + 7.5;
-
-  if (x == cubex) {
-    if (z >= cubez) {
-      for (var i = cubez; i <= z; i++) if (Engine.grid[i * 16 + x].height != position.y - 0.5) return false;
-      return true;
-    } else {
-      for (var i = cubez; i >= z; i--) if (Engine.grid[i * 16 + x].height != position.y - 0.5) return false;
-      return true;
-    }
-  } else if (z == cubez) {
-    if (x >= cubex) {
-      for (var i = cubex; i <= x; i++) if (Engine.grid[z * 16 + i].height != position.y - 0.5) return false;
-      return true;
-    } else {
-      for (var i = cubex; i >= x; i--) {
-        if (Engine.grid[z * 16 + i].height != position.y - 0.5) {
-          // console.log(i, cubex, x, z);
-          return false;
-        }
-      }
-      return true;
-    }
-  }
-  return false;
-}
-
-
 Engine.drawEntities = function() {
   if (Engine.level) {
     Engine.drawEntity(Engine.level);
@@ -598,10 +606,6 @@ Engine.drawEntities = function() {
     Engine.drawEntity(Engine.cube);
   }
 
-  if (Engine.marker) {
-    Engine.drawEntity(Engine.marker);
-  }
-
   for (var i = 0; i < Engine.entities.length; i++) {
     Engine.drawEntity(Engine.entities[i], false);
   }
@@ -609,11 +613,17 @@ Engine.drawEntities = function() {
   // for (var i = 0; i < Engine.lines.length; i++) {
   //   Renderer.drawLine(Engine.lines[i], Color.WHITE);
   // }
-  //
+
+  // Renderer.clearDepthBuffer();
+
+  if (Engine.marker) {
+    Engine.drawEntity(Engine.marker);
+  }
+
   // for (var i = 0; i < Engine.entities.length; i++) {
   //   Engine.drawEntityAxes(Engine.entities[i]);
   // }
-  //
+
 
   if (Engine.gridId > 0 && ! Engine.interact.drag) {
     var position = Engine.cube.transform.position;
@@ -695,6 +705,9 @@ Engine.drawOverlay = function() {
 
   ctx.fillStyle = 'rgb(0, 255, 0)';
   ctx.fillText(Renderer.largetri, 10, 40);
+
+  ctx.fillStyle = 'rgb(0, 255, 0)';
+  ctx.fillText(Renderer.pixcount, 10, 50);
 }
 
 

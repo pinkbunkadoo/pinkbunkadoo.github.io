@@ -1,8 +1,8 @@
 
 function Line(a, b, color) {
   // console.log('Line', a, b, color);
-  this.a = Vector.copy(a);
-  this.b = Vector.copy(b);
-  this.color = Color.copy(color);
+  this.a = a;
+  this.b = b;
+  this.color = color;
 }
 
