@@ -441,9 +441,9 @@ Engine.update = function() {
   // Engine.cone.transform.rotation.z += theta;
 
   if (Engine.interact.primary) {
-    var angle = -(Engine.interact.deltaX) * 0.01 * delta;
-    Renderer.view.camera.transform.rotateAround(center, axis, angle);
-    camera.orientation = Camera.lookAt(camera.transform.position, new Vector(), new Vector(0, 1, 0));
+    // var angle = -(Engine.interact.deltaX) * 0.01 * delta;
+    // Renderer.view.camera.transform.rotateAround(center, axis, angle);
+    // camera.orientation = Camera.lookAt(camera.transform.position, new Vector(), new Vector(0, 1, 0));
   }
 
   // var angle = -(Engine.interact.deltaX * 10) * delta;
@@ -781,6 +781,16 @@ Engine.updateInteraction = function() {
   var distance = Math.abs(Engine.interact.startX - Engine.interact.x) + Math.abs(Engine.interact.startY - Engine.interact.y);
   if (Engine.interact.primary && distance > 3) {
     Engine.interact.drag = true;
+  }
+
+  if (Engine.interact.drag) {
+    var camera = Renderer.view.camera;
+    var center = new Vector();
+    var axis = new Vector(0, 1, 0);
+    var delta = Time.delta;
+    var angle = -(Engine.interact.deltaX) * 0.2;
+    Renderer.view.camera.transform.rotateAround(center, axis, angle);
+    camera.orientation = Camera.lookAt(camera.transform.position, center, axis);
   }
 
   Engine.gridId = id;
