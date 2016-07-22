@@ -8,6 +8,10 @@ TEXTURES = [  ];
 Engine.createElements = function() {
   document.body.style.backgroundColor = 'rgb(0, 0, 0)';
 
+  Engine.fpsEl = document.createElement('div');
+  Engine.fpsEl.style.color = 'white';
+  document.body.appendChild(Engine.fpsEl);
+
   Engine.stage = document.createElement('div');
   Engine.stage.id = 'stage';
   Engine.stage.style.position = 'absolute';
@@ -154,6 +158,10 @@ Engine.processLevelMesh = function(level) {
       mp.x = mp.x - 0.5 + 8;
       mp.y = mp.y - 0.5 + 8;
 
+
+      triangle.id = (mp.y * 16 + mp.x) + 1;
+      var index = triangle.id - 1;
+
       if (Color.equals(mesh.colors[triangle.colors[0]], Color.GREY)) {
         if ((mp.y % 2 == 0 && mp.x % 2 == 0) || (mp.y % 2 != 0 && mp.x % 2 != 0)) {
           triangle.colors[0] = color_2;
@@ -164,12 +172,18 @@ Engine.processLevelMesh = function(level) {
           triangle.colors[1] = color_1;
           triangle.colors[2] = color_1;
         }
+        grid[index] = { height: v0.y, color: color };
       } else {
         color = mesh.colors[triangle.colors[0]];
+        if (grid[index] ==  undefined) {
+          grid[index] = { height: v0.y, color: color };
+        } else {
+          if (grid[index].height > v0.y) {
+            grid[index] = { height: v0.y, color: color };
+          }
+        }
       }
 
-      triangle.id = (mp.y * 16 + mp.x) + 1;
-      grid[triangle.id - 1] = { height: v0.y, color: color };
     }
   }
 }
@@ -393,6 +407,10 @@ Engine.frame = function(timestamp) {
     // }
 
     Time.count++;
+
+    if (Time.count % Engine.fps.standard == 0) {
+      Engine.fpsEl.innerHTML = Engine.fps.standard;
+    }
 
     Time.then = Time.now;
     Engine.frameID = requestAnimationFrame(Engine.frame);
@@ -764,7 +782,7 @@ Engine.endInteraction = function() {
       if (Engine.isValidMove(g)) {
 
         if (Engine.level.exit == g) {
-          console.log('win');
+          // console.log('win');
           Engine.loadLevel(Engine.level.other)
           Engine.moveTo(Engine.level.exit);
         } else {
