@@ -55,15 +55,22 @@
     }
     .header {
       width: 100%;
-      padding: 12px;
-      background-color: black;
       font-size: 14px;
+    }
+    .top {
+      display: flex;
+      flex-direction: row;
+      background-color: black;
+      padding: 12px;
     }
     </style>
   </head>
   <body>
-    <!-- <div class="title"><img src="images/title.png"></div> -->
-    <div class="header">All artwork created by David Croeser - dcroeser[at]gmail.com</div>
+    <div class="top">
+      <div class="header">All artwork created by David Croeser - dcroeser[at]gmail.com</div>
+      <div><a href="download/dcroeser.zip">Download</a></div>
+      <div class="item"><a href="download/dcroeser.zip"><img src="images/download.png"></a></div>
+    </div>
     <div class="flow">
       <div style="width:16px; height:90px;"></div>
       <div onclick="selectItem('images/harry.jpg')" class="item"><img src="images/thumb_harry.png"></div>
@@ -76,8 +83,6 @@
       <div onclick="selectItem('images/monk.jpg')" class="item"><img src="images/thumb_monk.png"></div>
       <div onclick="selectItem('images/bernard.jpg')" class="item"><img src="images/thumb_bernard.png"></div>
       <div style="width:32px; height:90px;"></div>
-      <div class="item"><a href="download/dcroeser.zip"><img src="images/download.png"></a></div>
-      <div><a href="download/dcroeser.zip">Download</a></div>
     </div>
     <!-- <div>Click image to zoom</div> -->
     <div id="holder"></div>
