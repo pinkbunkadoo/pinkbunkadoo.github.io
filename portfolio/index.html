@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" /> -->
+    <title>Work Samples</title>
+    <style type="text/css">
+    body {
+      background: #161616;
+      color: #999999;
+      font-family: tahoma, verdana, sans-serif;
+      font-size: 16px;
+      padding: 0px;
+      margin: 0px;
+    }
+    .title {
+      background-color: black;
+      display: flex;
+      flex-direction: row;
+      flex:auto;
+    }
+    .flow {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      background-color: black;
+    }
+    .item
+    {
+      margin-left: 3px;
+      margin-right: 3px;
+      cursor: pointer;
+    }
+    a:link {
+      color: #c0c0c0;
+    }
+    a:visited {
+      color: #999999;
+    }
+    .zoomin {
+      cursor: zoom-in;
+    }
+    .zoomout {
+      cursor: zoom-out;
+    }
+    .bottom {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 12px;
+      background-color: black;
+      font-size: 14px;
+
+    }
+    .header {
+      width: 100%;
+      padding: 12px;
+      background-color: black;
+      font-size: 14px;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="title"><img src="images/title.png"></div> -->
+    <div class="header">All artwork created by David Croeser - dcroeser[at]gmail.com</div>
+    <div class="flow">
+      <div style="width:16px; height:90px;"></div>
+      <div onclick="selectItem('images/harry.jpg')" class="item"><img src="images/thumb_harry.png"></div>
+      <div onclick="selectItem('images/hermione.jpg')" class="item"><img src="images/thumb_hermione.png"></div>
+      <div onclick="selectItem('images/ginny.jpg')" class="item"><img src="images/thumb_ginny.png"></div>
+      <!-- <div onclick="selectItem('images/luna.jpg')" class="item"><img src="images/thumb_luna.png"></div> -->
+      <div onclick="selectItem('images/bellatrix.jpg')" class="item"><img src="images/thumb_bellatrix.png"></div>
+      <div onclick="selectItem('images/mayday.jpg')" class="item"><img src="images/thumb_mayday.png"></div>
+      <div onclick="selectItem('images/fiat.jpg')" class="item"><img src="images/thumb_fiat.png"></div>
+      <div onclick="selectItem('images/monk.jpg')" class="item"><img src="images/thumb_monk.png"></div>
+      <div onclick="selectItem('images/bernard.jpg')" class="item"><img src="images/thumb_bernard.png"></div>
+      <div style="width:32px; height:90px;"></div>
+      <div class="item"><a href="download/dcroeser.zip"><img src="images/download.png"></a></div>
+      <div><a href="download/dcroeser.zip">Download</a></div>
+    </div>
+    <!-- <div>Click image to zoom</div> -->
+    <div id="holder"></div>
+    <!-- <div class="bottom">All artwork created by David Croeser - dcroeser(at)gmail.com</div> -->
+    <script src="./js/source.js"></script>
+  </body>
+</html>
