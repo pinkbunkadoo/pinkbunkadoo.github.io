@@ -1,34 +1,42 @@
 var info = {};
-
 var images = {};
 var previews = {};
 
-function selectItem(item) {
-  var name = item;
+var items = [ 'harry', 'hermione', 'ginny', 'bellatrix', 'mayday', 'monk', 'bernard', 'fiat' ];
 
-  if (name) {
+function preloadImages() {
+  for (var i = 0; i < items.length; i++) {
+    var name = items[i];
     var image = new Image();
-    image.id = item;
+    image.id = name;
     image.src = './images/preview_' + name + '.jpg';
     image.className = 'zoomin';
-    image.onload = onImageLoad;
     image.onclick = onImageClick;
-    previews[item] = image;
+    previews[name] = image;
+  }
+}
 
-    images[item] = new Image();
-    images[item].id = item;
-    images[item].className = 'zoomout';
-    images[item].src = './images/' + name + '.jpg';
-    images[item].onclick = onImageClick;
+function selectItem(name) {
+  if (name) {
+    holder.innerHTML = '';
+    holder.appendChild(previews[name]);
+
+    if (!images[name]) {
+      images[name] = new Image();
+      images[name].id = name;
+      images[name].className = 'zoomout';
+      images[name].src = './images/' + name + '.jpg';
+      images[name].onclick = onImageClick;
+    }
   }
 }
 
 
 function onImageLoad(e) {
-  var image = e.target;
-  var holder = document.getElementById('holder');
-  holder.innerHTML = '';
-  holder.appendChild(image);
+  // var image = e.target;
+  // var holder = document.getElementById('holder');
+  // holder.innerHTML = '';
+  // holder.appendChild(image);
 }
 
 
@@ -44,4 +52,7 @@ function onImageClick(e) {
     holder.appendChild(previews[id]);
   }
 }
+
+
+preloadImages();
 
