@@ -1,13 +1,25 @@
 var info = {};
 
+var images = {};
+var previews = {};
+
 function selectItem(item) {
-  // console.log(item);
   var name = item;
 
   if (name) {
     var image = new Image();
-    image.src = name;
+    image.id = item;
+    image.src = './images/preview_' + name + '.jpg';
+    image.className = 'zoomin';
     image.onload = onImageLoad;
+    image.onclick = onImageClick;
+    previews[item] = image;
+
+    images[item] = new Image();
+    images[item].id = item;
+    images[item].className = 'zoomout';
+    images[item].src = './images/' + name + '.jpg';
+    images[item].onclick = onImageClick;
   }
 }
 
@@ -17,34 +29,19 @@ function onImageLoad(e) {
   var holder = document.getElementById('holder');
   holder.innerHTML = '';
   holder.appendChild(image);
-  info.width = image.width;
-  info.height = image.height;
-
-  image.height = 320;
-  // image.style.cursor = 'zoom-in';
-  image.className = 'zoomin';
-  image.onclick = onImageClick;
 }
 
 
 function onImageClick(e) {
   var holder = document.getElementById('holder');
-  var image = new Image();
-  image.src = e.target.src;
+  var id = e.target.id;
 
-  if (e.target.height != info.height) {
-    image.width = info.width;
-    image.height = info.height;
-    // image.style.cursor = 'zoom-out';
-    image.className = 'zoomout';
-  } else {
-    image.height = 320;
-    // image.style.cursor = 'zoom-in';
-    image.className = 'zoomin';
-  }
-
-  image.onclick = onImageClick;
   holder.innerHTML = '';
-  holder.appendChild(image);
+
+  if (e.target.className == 'zoomin') {
+    holder.appendChild(images[id]);
+  } else {
+    holder.appendChild(previews[id]);
+  }
 }
 
