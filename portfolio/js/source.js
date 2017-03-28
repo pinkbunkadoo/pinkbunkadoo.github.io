@@ -4,6 +4,7 @@ var previews = {};
 
 var items = [ 'harry', 'hermione', 'ginny', 'bellatrix', 'mayday', 'monk', 'bernard', 'fiat' ];
 
+
 function preloadImages() {
   for (var i = 0; i < items.length; i++) {
     var name = items[i];
@@ -15,6 +16,7 @@ function preloadImages() {
     previews[name] = image;
   }
 }
+
 
 function selectItem(name) {
   if (name) {
