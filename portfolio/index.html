@@ -7,29 +7,34 @@
     <title>Work Samples</title>
     <style type="text/css">
     body {
-      background: #000;
+      background: black;
       color: #999999;
       font-family: tahoma, verdana, sans-serif;
       font-size: 16px;
       padding: 0px;
       margin: 0px;
     }
-    .title {
-      background-color: black;
+    .list {
       display: flex;
+      position: fixed;
+      top: 32px;
       flex-direction: row;
-      flex:auto;
+      background-color: #161616;
+      /*overflow: hidden;*/
+      height: 90px;
+      width: 100%;
     }
-    .flow {
+    .header {
+      position: fixed;
+      width: 100%;
       display: flex;
       flex-direction: row;
-      align-items: center;
       background-color: black;
+      overflow: hidden;
+      height: 32px;
     }
     .item
     {
-      /*margin-left: 12px;*/
-      /*margin-right: 3px;*/
       cursor: pointer;
     }
     a:link {
@@ -44,50 +49,37 @@
     .zoomout {
       cursor: zoom-out;
     }
-    .bottom {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      padding: 12px;
-      background-color: black;
-      font-size: 14px;
-
-    }
-    .header {
-      width: 100%;
-      font-size: 14px;
-    }
-    .top {
-      display: flex;
-      flex-direction: row;
-      background-color: black;
-      padding: 12px;
+    #spacer {
+      height: 148px;
+      width: 64px;
     }
     </style>
+    <script src="./js/source.js"></script>
   </head>
   <body>
-    <div class="top">
-      <!-- <div class="header">All artwork created by David Croeser - dcroeser[at]gmail.com</div> -->
-      <div class="header"><img src="images/top.png"></div>
-      <!-- <div><a href="download/dcroeser.zip">Download</a></div> -->
-      <div class="item"><a href="download/dcroeser.zip"><img src="images/download.png"></a></div>
+    <div class="header">
+      <div style="flex:auto"><img src="images/top.png"></div>
+      <div><a href="download/dcroeser.zip"><img src="images/download.png"></a></div>
     </div>
-    <div class="flow">
-      <div style="width:16px; height:90px;"></div>
+    <div class="list">
+      <!-- <div style="width:16px; height:90px;"></div> -->
       <div onclick="selectItem('images/harry.jpg')" class="item"><img src="images/thumb_harry.png"></div>
       <div onclick="selectItem('images/hermione.jpg')" class="item"><img src="images/thumb_hermione.png"></div>
       <div onclick="selectItem('images/ginny.jpg')" class="item"><img src="images/thumb_ginny.png"></div>
-      <!-- <div onclick="selectItem('images/luna.jpg')" class="item"><img src="images/thumb_luna.png"></div> -->
       <div onclick="selectItem('images/bellatrix.jpg')" class="item"><img src="images/thumb_bellatrix.png"></div>
       <div onclick="selectItem('images/mayday.jpg')" class="item"><img src="images/thumb_mayday.png"></div>
       <div onclick="selectItem('images/monk.jpg')" class="item"><img src="images/thumb_monk.png"></div>
       <div onclick="selectItem('images/bernard.jpg')" class="item"><img src="images/thumb_bernard.png"></div>
       <div onclick="selectItem('images/fiat.jpg')" class="item"><img src="images/thumb_fiat.png"></div>
-      <div style="width:32px; height:90px;"></div>
+      <div style="flex: auto"></div>
     </div>
-    <!-- <div>Click image to zoom</div> -->
-    <div id="holder"></div>
+    <div id="content">
+      <!-- <div id="left">left</div> -->
+      <div id="spacer"></div>
+      <div id="holder"></div>
+      <!-- <div id="right">right</div> -->
+    </div>
     <!-- <div class="bottom">All artwork created by David Croeser - dcroeser(at)gmail.com</div> -->
-    <script src="./js/source.js"></script>
+
   </body>
 </html>
