@@ -2,10 +2,8 @@ var info = {};
 var images = {};
 var previews = {};
 
-var items = [ 'harry', 'hermione', 'ginny', 'bellatrix', 'mayday', 'monk', 'bernard', 'fiat' ];
 
-
-function preloadImages() {
+function preloadImages(items) {
   for (var i = 0; i < items.length; i++) {
     var name = items[i];
     var image = new Image();
@@ -20,6 +18,8 @@ function preloadImages() {
 
 function selectItem(name) {
   if (name) {
+    var zoomEl = document.getElementById('zoom');
+    zoomEl.style.display = 'block';
     holder.innerHTML = '';
     holder.appendChild(previews[name]);
 
@@ -48,13 +48,17 @@ function onImageClick(e) {
 
   holder.innerHTML = '';
 
+  var zoomEl = document.getElementById('zoom');
+
   if (e.target.className == 'zoomin') {
+    zoomEl.style.display = 'none';
     holder.appendChild(images[id]);
   } else {
+    zoomEl.style.display = 'block';
     holder.appendChild(previews[id]);
   }
 }
 
 
-preloadImages();
+preloadImages([ 'harry', 'hermione', 'ginny', 'bellatrix', 'mayday', 'monk', 'bernard', 'fiat' ]);
 

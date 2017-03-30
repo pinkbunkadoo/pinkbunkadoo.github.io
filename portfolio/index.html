@@ -14,6 +14,12 @@
       padding: 0px;
       margin: 0px;
     }
+    a:link {
+      color: #c0c0c0;
+    }
+    a:visited {
+      color: #999999;
+    }
     .list {
       display: flex;
       position: fixed;
@@ -36,12 +42,6 @@
     {
       cursor: pointer;
     }
-    a:link {
-      color: #c0c0c0;
-    }
-    a:visited {
-      color: #999999;
-    }
     .zoomin {
       cursor: zoom-in;
     }
@@ -51,6 +51,13 @@
     #spacer {
       height: 124px;
       width: 64px;
+    }
+    #zoom {
+      left: 720px;
+      margin-left: -64px;
+      display: none;
+      position: fixed;
+      pointer-events: none;
     }
     </style>
     <script src="./js/source.js"></script>
@@ -74,6 +81,7 @@
     </div>
     <div id="content">
       <div id="spacer"></div>
+      <div id="zoom"><img src="images/zoom.png"></div>
       <div id="holder"></div>
     </div>
   </body>
