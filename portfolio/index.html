@@ -7,82 +7,42 @@
     <title>Work Samples</title>
     <style type="text/css">
     body {
-      background: black;
+      background: #161616;
       color: #999999;
       font-family: tahoma, verdana, sans-serif;
       font-size: 16px;
       padding: 0px;
       margin: 0px;
     }
-    a:link {
-      color: #c0c0c0;
-    }
-    a:visited {
-      color: #999999;
-    }
-    .list {
-      display: flex;
-      position: fixed;
-      top: 32px;
-      flex-direction: row;
-      background-color: #161616;
-      height: 90px;
-      width: 100%;
-    }
-    .header {
-      position: fixed;
-      width: 100%;
+    #container {
+      margin-top: 64px;
+      width: 720px;
+      max-width: 720px;
       display: flex;
       flex-direction: row;
-      background-color: black;
-      overflow: hidden;
-      height: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .item
-    {
-      cursor: pointer;
-    }
-    .zoomin {
-      cursor: zoom-in;
-    }
-    .zoomout {
-      cursor: zoom-out;
-    }
-    #spacer {
-      height: 124px;
-      width: 64px;
-    }
-    #zoom {
-      left: 720px;
-      margin-left: -64px;
-      display: none;
-      position: fixed;
-      pointer-events: none;
+    .item {
+      padding: 0px;
+      margin: 0px;
+      border: 1px solid black;
+      height: 120px;
     }
     </style>
-    <script src="./js/source.js"></script>
   </head>
   <body>
-    <div class="header">
-      <div><img src="images/top.png"></div>
-      <div style="width:240px"></div>
-      <div><a href="download/dcroeser.zip"><img src="images/download.png"></a></div>
+    <center>
+    <div id="container">
+      <div class="item"><a href="./images/harry.jpg" target="_blank"><img src="./images/preview_harry.jpg"></a></div>
+      <div class="item"><a href="./images/hermione.jpg" target="_blank"><img src="./images/preview_hermione.jpg"></a></div>
+      <div class="item"><a href="./images/ginny.jpg" target="_blank"><img src="./images/preview_ginny.jpg"></a></div>
+      <div class="item"><a href="./images/bellatrix.jpg" target="_blank"><img src="./images/preview_bellatrix.jpg"></a></div>
+      <div class="item"><a href="./images/mayday.jpg" target="_blank"><img src="./images/preview_mayday.jpg"></a></div>
+      <div class="item"><a href="./images/monk.jpg" target="_blank"><img src="./images/preview_monk.jpg"></a></div>
+      <div class="item"><a href="./images/bernard.jpg" target="_blank"><img src="./images/preview_bernard.jpg"></a></div>
+      <div class="item"><a href="./images/fiat.jpg" target="_blank"><img src="./images/preview_fiat.jpg"></a></div>
     </div>
-    <div class="list">
-      <div onclick="selectItem('harry')" class="item"><img src="images/thumb_harry.png"></div>
-      <div onclick="selectItem('hermione')" class="item"><img src="images/thumb_hermione.png"></div>
-      <div onclick="selectItem('ginny')" class="item"><img src="images/thumb_ginny.png"></div>
-      <div onclick="selectItem('bellatrix')" class="item"><img src="images/thumb_bellatrix.png"></div>
-      <div onclick="selectItem('mayday')" class="item"><img src="images/thumb_mayday.png"></div>
-      <div onclick="selectItem('monk')" class="item"><img src="images/thumb_monk.png"></div>
-      <div onclick="selectItem('bernard')" class="item"><img src="images/thumb_bernard.png"></div>
-      <div onclick="selectItem('fiat')" class="item"><img src="images/thumb_fiat.png"></div>
-      <div style="flex: auto"></div>
-    </div>
-    <div id="content">
-      <div id="spacer"></div>
-      <div id="zoom"><img src="images/zoom.png"></div>
-      <div id="holder"></div>
-    </div>
+    </center>
   </body>
 </html>
