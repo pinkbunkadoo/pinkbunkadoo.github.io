@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" /> -->
+    <meta http-equiv="Expires" content="0" />
     <title>Work Samples</title>
     <style type="text/css">
     body {
@@ -15,33 +15,60 @@
       margin: 0px;
     }
     #container {
-      margin-top: 64px;
-      width: 720px;
-      max-width: 720px;
+      margin-top: 128px;
+      width: 850px;
+      max-width: 850px;
       display: flex;
+      flex-direction: column;
+      /*flex-wrap: wrap;*/
+      justify-content: left;
+
+    }
+    .row {
       flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: flex;
+    }
+    .spacer {
+      background: #99222d;
+      width: 24px;
+      min-width: 24px;
     }
     .item {
       padding: 0px;
       margin: 0px;
-      border: 1px solid black;
+      /*border: 1px solid black;*/
       height: 120px;
+
     }
     </style>
   </head>
   <body>
     <center>
     <div id="container">
-      <div class="item"><a href="./images/harry.jpg" target="_blank"><img src="./images/preview_harry.jpg"></a></div>
-      <div class="item"><a href="./images/hermione.jpg" target="_blank"><img src="./images/preview_hermione.jpg"></a></div>
-      <div class="item"><a href="./images/ginny.jpg" target="_blank"><img src="./images/preview_ginny.jpg"></a></div>
-      <div class="item"><a href="./images/bellatrix.jpg" target="_blank"><img src="./images/preview_bellatrix.jpg"></a></div>
-      <div class="item"><a href="./images/mayday.jpg" target="_blank"><img src="./images/preview_mayday.jpg"></a></div>
-      <div class="item"><a href="./images/monk.jpg" target="_blank"><img src="./images/preview_monk.jpg"></a></div>
-      <div class="item"><a href="./images/bernard.jpg" target="_blank"><img src="./images/preview_bernard.jpg"></a></div>
-      <div class="item"><a href="./images/fiat.jpg" target="_blank"><img src="./images/preview_fiat.jpg"></a></div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/harry.jpg" target="_blank"><img src="./images/preview_harry.png"></a></div>
+        <div class="item"><a href="./images/mayday.jpg" target="_blank"><img src="./images/preview_mayday.png"></a></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/hermione.jpg" target="_blank"><img src="./images/preview_hermione.png"></a></div>
+        <div class="item"><a href="./images/monk.jpg" target="_blank"><img src="./images/preview_monk.png"></a></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/ginny.jpg" target="_blank"><img src="./images/preview_ginny.png"></a></div>
+        <div class="item"><a href="./images/fiat.jpg" target="_blank"><img src="./images/preview_fiat.png"></a></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/bellatrix.jpg" target="_blank"><img src="./images/preview_bellatrix.png"></a></div>
+        <div class="item"><a href="./images/bernard.jpg" target="_blank"><img src="./images/preview_bernard.png?z=32s"></a></div>
+        <div class="spacer"></div>
+      </div>
     </div>
     </center>
   </body>
