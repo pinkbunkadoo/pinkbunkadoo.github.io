@@ -10,9 +10,12 @@
       background: #161616;
       color: #999999;
       font-family: tahoma, verdana, sans-serif;
-      font-size: 16px;
+      font-size: 13px;
       padding: 0px;
       margin: 0px;
+    }
+    a {
+      color: lightgray;
     }
     #container {
       margin-top: 128px;
@@ -21,8 +24,8 @@
       display: flex;
       flex-direction: column;
       /*flex-wrap: wrap;*/
-      justify-content: left;
-
+      /*justify-content: left;*/
+      align-items: center;
     }
     .row {
       flex-direction: row;
@@ -36,15 +39,20 @@
     .item {
       padding: 0px;
       margin: 0px;
-      /*border: 1px solid black;*/
       height: 120px;
-
+    }
+    .separator {
+      min-width: 16px;
+      min-height: 16px;
+      width: 16px;
+      height: 16px;
+      white-space: nowrap;
     }
     </style>
   </head>
   <body>
     <center>
-    <div id="container">
+    <!-- <div id="container">
       <div class="row">
         <div class="spacer"></div>
         <div class="item"><a href="./images/harry.jpg" target="_blank"><img src="./images/preview_harry.png"></a></div>
@@ -69,7 +77,38 @@
         <div class="item"><a href="./images/bernard.jpg" target="_blank"><img src="./images/preview_bernard.png?z=32s"></a></div>
         <div class="spacer"></div>
       </div>
+    </div> -->
+
+    <div id="container">
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/harry.jpg" target="_blank"><img src="./images/preview_harry.png"></a></div>
+        <div class="item"><a href="./images/hermione.jpg" target="_blank"><img src="./images/preview_hermione.png"></a></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/bellatrix.jpg" target="_blank"><img src="./images/preview_bellatrix.png"></a></div>
+        <div class="item"><a href="./images/ginny.jpg" target="_blank"><img src="./images/preview_ginny.png"></a></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="separator"></div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/mayday.jpg" target="_blank"><img src="./images/preview_mayday.png"></a></div>
+        <div class="item"><a href="./images/fiat.jpg" target="_blank"><img src="./images/preview_fiat.png"></a></div>
+        <div class="spacer"></div>
+      </div>
+      <div class="separator"></div>
+      <div class="row">
+        <div class="spacer"></div>
+        <div class="item"><a href="./images/monk.jpg" target="_blank"><img src="./images/preview_monk.png"></a></div>
+        <div class="item"><a href="./images/bernard.jpg" target="_blank"><img src="./images/preview_bernard.png?z=32s"></a></div>
+        <div class="spacer"></div>
+      </div>
     </div>
+    <br><br><br>
+    <a href="./images/dcroeser_samples.zip">DOWNLOAD</a>
     </center>
   </body>
 </html>
