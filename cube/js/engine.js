@@ -8,8 +8,8 @@ TEXTURES = [ ];
 Engine.createElements = function() {
   document.body.style.backgroundColor = 'rgb(16, 16, 16)';
 
-  Engine.stage = document.createElement('div');
-  Engine.stage.id = 'stage';
+  Engine.stage = document.getElementById('stage');
+  // Engine.stage.id = 'stage';
   Engine.stage.style.position = 'absolute';
   Engine.stage.style.overflow = 'hidden';
   Engine.stage.style.top = '50%';
@@ -21,7 +21,7 @@ Engine.createElements = function() {
   Engine.stage.style.padding = '0px';
   Engine.stage.style.border = '0px';
   Engine.stage.style.fontSize = '0';
-  document.body.appendChild(Engine.stage);
+  // document.body.appendChild(Engine.stage);
 
   Engine.canvas = document.createElement('canvas');
   Engine.canvas.style.backgroundColor = 'green';
@@ -1272,13 +1272,8 @@ Engine.initEventListeners = function() {
   window.addEventListener('keydown', Engine.onKeyDown);
   window.addEventListener('keyup', Engine.onKeyUp);
 
-  // Engine.canvas.addEventListener('click', Engine.onClick);
-  // Engine.canvas.addEventListener('mousedown', Engine.onMouseDown);
-  // Engine.canvas.addEventListener('mousemove', Engine.onMouseMove);
-  // Engine.canvas.addEventListener('mouseup', Engine.onMouseUp);
-  // Engine.canvas.addEventListener('mouseout', Engine.onMouseOut);
-  // Engine.canvas.addEventListener('mouseover', Engine.onMouseOver);
-  window.addEventListener('mousedown', Engine.onMouseDown);
+
+  Engine.canvas.addEventListener('mousedown', Engine.onMouseDown);
   window.addEventListener('mousemove', Engine.onMouseMove);
   window.addEventListener('mouseup', Engine.onMouseUp);
   window.addEventListener('mouseout', Engine.onMouseOut);
