@@ -1,67 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv='cache-control' content='no-cache'>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
-    <title></title>
-    <style>
-    html, body {
-      font-family: Tahoma, Arial, sans-serif;
-      font-size: 13px;
-      color: #999999;
-    }
-    #header {
-      align: center;
-      position: fixed;
-      background: rgba(0, 0, 0, 0.5);
-      /*bottom: 0px;*/
-      width: 100%;
-    }
-    #footer {
-      position: fixed;
-      bottom: 0px;
-      width: 100%;
-    }
-    a {
-        color: white;
-    }
-    a:visited {
-      color: lightgray;
-    }
-    </style>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="./css/common.css">
+    <title>Cuboid</title>
   </head>
-
   <body>
-    <div id='log'></div>
-    <div id='stage'></div>
-    <div id="footer"><center><a href="https://github.com/pinkbunkadoo/pinkbunkadoo.github.io/tree/master/cube" target="_blank">Source</a> (GitHub)</center><br><br></div>
-    <div id="header"><div align="center"><br>(1) Click and drag to rotate the view (2) Highlight and click a tile to move the player token (3) The token moves in straight lines only
-    <br>(4) Coloured tiles teleport the token (5) Enter a doorway to move between areas (6) Move onto raised tiles to trigger switches</div><br><br>
-
+    <div id="content">
+      <div id="about" hidden>
+        <div id="about-content">
+          <div class="title">What's this nonsense?</div>
+          <div>Cuboid is a short demo inspired by 80s isometric puzzle games, like Head over Heels. It was created to test a toy software renderer I had written in JavaScript.</div>
+          <br>
+          <div>Instructions:</div>
+          <ol>
+            <li>Drag to rotate the view.</li>
+            <li>Click on a tile to move the token to that position.</li>
+            <li>The token can only move in straight lines.</li>
+            <li>Blue tiles are teleports.</li>
+            <li>Enter doorways to move between areas.</li>
+            <li>Raised tiles are switches. Switches can trigger changes in an area, such as activating a bridge.</li>
+          </ol>
+          <br>
+          <div align="center">Run in Google Chrome for best performance.</div>
+          <br>
+          <div align="center">Source is available on <a href="https://github.com/pinkbunkadoo/cuboid" target="_blank">GitHub</a></div>
+        </div>
+      </div>
+      <div id="stage">
+        <div id="about-icon">?</div>
+      </div>
     </div>
-    <script src='./js/lib.js'></script>
-    <script src='./js/vector.js'></script>
-    <script src='./js/line.js'></script>
-    <script src='./js/rectangle.js'></script>
-    <script src='./js/color.js'></script>
-    <script src='./js/matrix.js'></script>
-    <script src='./js/transform.js'></script>
-    <script src='./js/entity.js'></script>
-    <script src='./js/camera.js'></script>
-    <script src='./js/light.js'></script>
-    <script src='./js/mesh.js'></script>
-    <script src='./js/texture.js'></script>
-    <script src='./js/surface.js'></script>
-    <script src='./js/renderer.js'></script>
-    <script src='./js/view.js'></script>
-    <script src='./js/resource.js'></script>
-    <script src='./js/timer.js'></script>
-    <script src='./js/transition.js'></script>
-    <script src='./js/engine.js'></script>
-    <script>
-      // Engine.init(480, 300, 2);
-      Engine.init(320, 200, 3);
-    </script>
+    <script src="./bundle.js"></script>
   </body>
 </html>
