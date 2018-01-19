@@ -1556,7 +1556,9 @@ if (document.addEventListener) {
     ready();
   }, false);
 } else {
-  ready();
+  window.onload = function() {
+    ready();
+  }
 }
 
 window.Engine = Engine;
